@@ -1217,14 +1217,14 @@ def create_english_dataset(share_dir='/content/drive/Shareddrives/BigScience/'):
       #Annotations and selections are under Apache-2.0 License
       """
       @inproceedings{zhengguha2021,
-	title={When Does Pretraining Help? Assessing Self-Supervised Learning for Law and the CaseHOLD Dataset},
-	author={Lucia Zheng and Neel Guha and Brandon R. Anderson and Peter Henderson and Daniel E. Ho},
-	year={2021},
-	eprint={2104.08671},
-	archivePrefix={arXiv},
-	primaryClass={cs.CL},
-	booktitle={Proceedings of the 18th International Conference on Artificial Intelligence and Law},
-	publisher={Association for Computing Machinery}
+        title={When Does Pretraining Help? Assessing Self-Supervised Learning for Law and the CaseHOLD Dataset},
+        author={Lucia Zheng and Neel Guha and Brandon R. Anderson and Peter Henderson and Daniel E. Ho},
+        year={2021},
+        eprint={2104.08671},
+        archivePrefix={arXiv},
+        primaryClass={cs.CL},
+        booktitle={Proceedings of the 18th International Conference on Artificial Intelligence and Law},
+        publisher={Association for Computing Machinery}
   }      
       """
       with open(f"{share_dir}/casehold.csv", "rb") as f:
@@ -1434,25 +1434,25 @@ def do_ner(do_casehold=False):
               ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
               if len(ents) > 1 or 'cancer' in sent3 or 'class' in sent3 or 'union' in sent3 or 'democrat' in sent3 or 'republican' in sent3 or 'socialist' in sent3:
                 if len(ents) < 5:
-		  if '@' in sent3 or 'Social Sec' in sent3 or 'password' in sent3:
-		      context = {}
-		      ents2 = []
-		      for item in ents:
-			if item[1] == 'PERSON':
-			  if item[0] in public_figures:
-			    item[1] = 'PUBLIC_FIGURE'
-			  else:
-			    context[item[0]] = context.get(item[0], \
-						      faker_target_lang.name() if " " in item[0]  else \
-						      faker_target_lang.first_name())
-			    sent3 = sent3.replace(item[0], context[item[0]])
-			    if " " in item[0]:
-			      context[item[0].split()[0]] = context[item[0]].split()[0]
-			      context[item[0].split()[-1]] = context[item[0]].split()[-1]
-			    item[0] = context[item[0]]
-			ents2.append(item)
-		    else:
-		      ents2 = ents
+                  if '@' in sent3 or 'Social Sec' in sent3 or 'password' in sent3:
+                      context = {}
+                      ents2 = []
+                      for item in ents:
+                        if item[1] == 'PERSON':
+                          if item[0] in public_figures:
+                            item[1] = 'PUBLIC_FIGURE'
+                          else:
+                            context[item[0]] = context.get(item[0], \
+                                                      faker_target_lang.name() if " " in item[0]  else \
+                                                      faker_target_lang.first_name())
+                            sent3 = sent3.replace(item[0], context[item[0]])
+                            if " " in item[0]:
+                              context[item[0].split()[0]] = context[item[0]].split()[0]
+                              context[item[0].split()[-1]] = context[item[0]].split()[-1]
+                            item[0] = context[item[0]]
+                        ents2.append(item)
+                  else:
+                    ents2 = ents
                   o.write (json.dumps({"text": sent3, "ner": ents2, "domain": domain, "target_lang": "en", "id": row_id})+"\n")
                   row_id += 1
         prev = sent2
