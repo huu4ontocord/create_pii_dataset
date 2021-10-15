@@ -1430,7 +1430,7 @@ def do_ner(do_casehold=False):
           if True:
             doc = nlp(sent3)
             entities = list(doc.ents)
-            if [_ for entity in entities if entity.label_ == 'PERSON']:
+            if [entity for entity in entities if entity.label_ == 'PERSON']:
               ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
               if len(ents) > 1 or 'cancer' in sent3 or 'class' in sent3 or 'union' in sent3 or 'democrat' in sent3 or 'republican' in sent3 or 'socialist' in sent3:
                 if len(ents) < 5:
@@ -1466,7 +1466,7 @@ def do_ner(do_casehold=False):
         doc = nlp(sent)
         entities = list(doc.ents)
         
-        if [_ for entity in entities if entity.label_ == 'PERSON']:
+        if [entity for entity in entities if entity.label_ == 'PERSON']:
           ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
           if len(ents) > 1 and len(ents) < 5:
             if random.randint(0,1)==0:
@@ -1490,9 +1490,6 @@ def do_ner(do_casehold=False):
               ents2 = ents
             o.write (json.dumps({"text": sent, "ner": ents2, "domain": domain, "target_lang": "en", "id": row_id})+"\n")
             row_id += 1
-
-
-
 
 def do_translation(target_lang='hi', mariam_mt=True, person_swap=True):
   """ 
