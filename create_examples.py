@@ -1434,7 +1434,26 @@ def do_ner(do_casehold=False):
               ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
               if len(ents) > 1 or 'cancer' in sent3 or 'class' in sent3 or 'union' in sent3 or 'democrat' in sent3 or 'republican' in sent3 or 'socialist' in sent3:
                 if len(ents) < 5:
-                  o.write (json.dumps({"text": sent3, "ner": ents, "domain": domain, "target_lang": "en", "id": row_id})+"\n")
+		  if '@' in sent3 or 'Social Sec' in sent3 or 'password' in sent3:
+		      context = {}
+		      ents2 = []
+		      for item in ents:
+			if item[1] == 'PERSON':
+			  if item[0] in public_figures:
+			    item[1] = 'PUBLIC_FIGURE'
+			  else:
+			    context[item[0]] = context.get(item[0], \
+						      faker_target_lang.name() if " " in item[0]  else \
+						      faker_target_lang.first_name())
+			    sent = sent.replace(item[0], context[item[0]])
+			    if " " in item[0]:
+			      context[item[0].split()[0]] = context[item[0]].split()[0]
+			      context[item[0].split()[-1]] = context[item[0]].split()[-1]
+			    item[0] = context[item[0]]
+			ents2.append(item)
+		    else:
+		      ents2 = ents
+                  o.write (json.dumps({"text": sent3, "ner": ents2, "domain": domain, "target_lang": "en", "id": row_id})+"\n")
                   row_id += 1
         prev = sent2
         
@@ -1469,7 +1488,7 @@ def do_ner(do_casehold=False):
         if [entity for entity in entities if entity.label_ == 'PERSON']:
           ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
           if len(ents) > 1 and len(ents) < 5:
-            if random.randint(0,1)==0:
+            if random.randint(0,1)==0 or '@' in sent or 'Social Sec' in sent or 'password' in sent:
               context = {}
               ents2 = []
               for item in ents:
