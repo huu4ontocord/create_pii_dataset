@@ -1705,7 +1705,7 @@ def do_translation(target_lang='hi', mariam_mt=True, person_swap=True):
 #do_translation(target_lang="hi")
 if __name__ == "__main__":  
   if "-target_lang" in sys.argv:
-    target_lang = sys.argv[sys.argv.index("-t")+1]   
+    target_lang = sys.argv[sys.argv.index("-target_lang")+1]   
     if target_lang == "en":
       do_ner()
     else:
