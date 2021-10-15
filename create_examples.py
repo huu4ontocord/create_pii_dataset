@@ -1445,7 +1445,7 @@ def do_ner(do_casehold=False):
 			    context[item[0]] = context.get(item[0], \
 						      faker_target_lang.name() if " " in item[0]  else \
 						      faker_target_lang.first_name())
-			    sent = sent.replace(item[0], context[item[0]])
+			    sent3 = sent3.replace(item[0], context[item[0]])
 			    if " " in item[0]:
 			      context[item[0].split()[0]] = context[item[0]].split()[0]
 			      context[item[0].split()[-1]] = context[item[0]].split()[-1]
