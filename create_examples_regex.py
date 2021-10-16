@@ -1567,7 +1567,7 @@ def do_ner(do_casehold=False):
           ents = [[entity.text, entity.label_] for entity in entities if entity.label_ in ('PERSON', 'GPE', 'ORG', 'NORP') and 'http:' not in entity.text]
           swap=False
           for label, regex in basic_regex:
-            for x in regex.findall(sent3):
+            for x in regex.findall(sent):
               if type(x) != str: continue
               ents.append([x, label])
               if label in ('GOVT_ID', 'STREET_ADDRESS',):
