@@ -50,7 +50,8 @@ basic_regex = [
     ("STREET_ADDRESS"  , re.compile('\b\d{5}(?:[-\s]\d{4})?\b')),
     ("STREET_ADDRESS"  , re.compile('P\.? ?O\.? Box \d+')),
     ("GOVT_ID"         , re.compile('(?!000|666|333)0*(?:[0-6][0-9][0-9]|[0-7][0-6][0-9]|[0-7][0-7][0-2])[- ](?!00)[0-9]{2}[- ](?!0000)[0-9]{4}')),
-    ("DISEASE"         , re.compile("diabetes|cancer|HIV|AIDS|Alzheimer's|Alzheimer|heart disease"))
+    ("DISEASE"         , re.compile("diabetes|cancer|HIV|AIDS|Alzheimer's|Alzheimer|heart disease")),
+    ("NORP"            , re.compile("upper class|middle class|working class|lower class")),
 ]
    
 
